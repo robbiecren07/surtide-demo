@@ -1,12 +1,12 @@
 import { graphcmsClient } from '@/lib/client'
-import { pageQuery } from '@/lib/queries'
+import { homePageQuery } from '@/lib/queries'
 import { parsePageData } from '@/utils/parsePageData'
 import { getFeaturedSingle, getProductsInCollection } from "@/lib/shopify"
 import BlockWrapper from '@/components/BlockWrapper'
 import Layout from '@/components/Layout'
 import * as Marketing from '@/marketing'
 
-export default function IndexPage({ page, navigation, products, featuredProduct }) {
+export default function IndexPage({ data, page, products, featuredProduct }) {
 
   const pageNewsletter = page?.marketing?.find(
     (block) => block.__typename === 'Newsletter'
@@ -18,7 +18,7 @@ export default function IndexPage({ page, navigation, products, featuredProduct 
 
   return (
     <>
-      <Layout page={page} navigation={navigation}>
+      <Layout {...data}>
         <BlockWrapper {...page} products={products} featuredProduct={featuredProduct} />
 
         {pageNewsletter && <Marketing.NewsletterSignup {...pageNewsletter} />}
@@ -29,21 +29,19 @@ export default function IndexPage({ page, navigation, products, featuredProduct 
 }
 
 export async function getStaticProps({ preview = false }) {
+  const client = graphcmsClient(preview)
+  
+  const data = await client.request(homePageQuery)
+
   const products = await getProductsInCollection()
   const featuredProduct = await getFeaturedSingle()
-  const client = graphcmsClient(preview)
-
-  const { page, navigation } = await client.request(pageQuery, {
-    slug: 'home'
-  })
-
-  const parsedPageData = await parsePageData(page)
+  const parsedPageData = await parsePageData(data.page)
 
   return {
     props: {
+      data,
       page: parsedPageData,
       products,
-      navigation,
       featuredProduct,
       preview
     },

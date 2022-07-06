@@ -1,7 +1,7 @@
-import { Box, Heading, VisuallyHidden } from '@chakra-ui/react'
+import { Box, VisuallyHidden } from '@chakra-ui/react'
 
 export default function ColorSwatches({ color }) {
-
+  // defining/settings background image for color swatches
   const black = 'url("/img/black_68x.png")'
   const washedDenim = 'url("/img/washed-denim_68x.png")'
   const blueRed = 'url("/img/blue-red_68x.png")'
@@ -11,6 +11,7 @@ export default function ColorSwatches({ color }) {
   const navy = 'url("/img/navy_68x.png")'
   const marl = 'url("/img/marl_68x.png")'
   const teal = 'url("/img/teal_68x.png")'
+  const military = 'url("/img/military_68x.jpg")'
 
   let theColor
   if (color === 'Black') {
@@ -40,32 +41,20 @@ export default function ColorSwatches({ color }) {
   if (color === 'Teal') {
     theColor = teal
   }
+  if (color === 'Military') {
+    theColor = military
+  }
 
   return (
-    // <Box as="label"
-    //   pos="relative"
-    //   w="auto"
-    //   h="auto"
-    //   borderColor="transparent"
-    //   borderRadius="50%"
-    //   mx="4px"
-    //   transition="box-shadow ease-in-out .15s"
-    //   cursor="pointer"
-    //   _hover={{
-    //     boxShadow: '0 0 0 3px #fff,0 0 0 4px rgba(33,33,33,0.7),0 0 3px 5px rgba(33,33,33,0.2)'
-    //   }}
-    //   title={color}
-    // >
-      <Box as="span" display="block" w="22px" h="22px"
-        boxShadow="0 0 0 1px #212121"
-        borderRadius="50%"
-        backgroundSize="cover"
-        backgroundPosition="center"
-        backgroundRepeat="no-repeat"
-        backgroundImage={theColor}
-      >
-        <VisuallyHidden>{color}</VisuallyHidden>
-      </Box>
-    // </Box>
+    <Box as="span" display="block" w="22px" h="22px"
+      boxShadow="0 0 0 1px #212121"
+      borderRadius="50%"
+      backgroundSize="cover"
+      backgroundPosition="center"
+      backgroundRepeat="no-repeat"
+      backgroundImage={theColor}
+    >
+      <VisuallyHidden>{color}</VisuallyHidden>
+    </Box>
   )
 }

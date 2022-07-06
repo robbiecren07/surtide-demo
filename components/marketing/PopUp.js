@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Box, Text, Button, Stack, Heading, VisuallyHidden, Input, FormLabel, CloseButton} from '@chakra-ui/react'
+import { Box, Text, Button, Stack, Heading, VisuallyHidden, Input, FormLabel, CloseButton, useToast} from '@chakra-ui/react'
 
 export default function PopUp({ popUpDescription, cta, popUpTitle }) {
   // set state for popup
@@ -42,6 +42,7 @@ export default function PopUp({ popUpDescription, cta, popUpTitle }) {
     duration: 0.5
   }
 
+  const toast = useToast()
   // return null if no popup title
   if (!popUpTitle) return null
 
@@ -109,6 +110,15 @@ export default function PopUp({ popUpDescription, cta, popUpTitle }) {
                       _hover={{
                         bg: 'green.800'
                       }}
+                      onClick={() =>
+                        toast({
+                          title: 'Warning!',
+                          description: "This is a just a demo newsletter signup!",
+                          status: 'warning',
+                          duration: 4000,
+                          isClosable: true,
+                        })
+                      }
                     >
                       {cta || 'Submit'}
                     </Button>

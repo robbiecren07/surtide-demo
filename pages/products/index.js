@@ -1,15 +1,15 @@
 import { graphcmsClient } from '@/lib/client'
 import { pageQuery } from '@/lib/queries'
 import { parsePageData } from '@/utils/parsePageData'
-import { getCollection, getProduct, recursiveCatalog } from '@/lib/shopify'
+import { getCollection } from '@/lib/shopify'
 import Layout from '@/components/Layout'
 import BlockWrapper from '@/components/BlockWrapper'
 
-export default function ProductPage({ page, products, navigation }) {
+export default function ProductPage({ data, page, products }) {
 
   return (
     <>
-      <Layout page={page} navigation={navigation}>
+      <Layout {...data}>
         <BlockWrapper {...page} productsPage={products.products} />
       </Layout>
     </>
@@ -17,19 +17,19 @@ export default function ProductPage({ page, products, navigation }) {
 }
 
 export async function getStaticProps({ preview = false }) {
-  const products = await getCollection('all')
   const client = graphcmsClient(preview)
 
-  const { page, navigation } = await client.request(pageQuery, {
+  const data = await client.request(pageQuery, {
     slug: 'products'
   })
 
-  const parsedPageData = await parsePageData(page)
+  const products = await getCollection('all')
+  const parsedPageData = await parsePageData(data.page)
 
   return {
     props: {
+      data,
       page: parsedPageData,
-      navigation,
       products,
       preview
     },

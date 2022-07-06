@@ -1,13 +1,12 @@
 import Image from 'next/image'
-import { Box, Flex, Heading, Stack, Text } from '@chakra-ui/react'
-import { MDXRemote } from 'next-mdx-remote'
 import Link from 'next/link'
 import Button from '@/components/Button'
+import { Box, Heading, Stack, Text } from '@chakra-ui/react'
 
 function NoImageCard({ content, title, button }) {
 
   return (
-    <Box minH="480px" w="100%" pos="relative" bg="rgb(84, 73, 42)">
+    <Box h={{ base: "300px", lg: "480px" }} w="100%" pos="relative" bg="rgb(84, 73, 42)">
       <Stack spacing={4} h="100%" justifyContent="center" alignItems="center" p={6}>
         <Heading
           as="h2"
@@ -35,13 +34,13 @@ function NoImageCard({ content, title, button }) {
   )
 }
 
-export default function FAQCard({ featureContent, title, image, button }) {
+export default function FeatureCard({ featureContent, title, image, button }) {
   if (image === null) {
     return <NoImageCard content={featureContent} title={title} button={button} />
   }
 
   return (
-    <Box minH="480px" w="100%" pos="relative" bg="rgb(84, 73, 42)" overflow="hidden">
+    <Box h={{ base: "300px", lg: "480px" }} w="100%" pos="relative" bg="rgb(84, 73, 42)" overflow="hidden">
       <Link href={button.href} passHref>
         <a className="feature-card">
           <Box

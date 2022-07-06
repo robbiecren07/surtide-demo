@@ -1,12 +1,13 @@
 import Image from 'next/image'
-import { Box, Flex, Heading, Stack, Text } from '@chakra-ui/react'
 import Button from '@/components/Button'
+import { Box, Flex, Heading, Stack, Text } from '@chakra-ui/react'
 
 export default function CTAFullWidth({ buttons, image, ctaTitle, buttonLabel, ctaLineOne, ctaLineTwo }) {
+  if (!ctaTitle) return null
 
   return (
-    <Box as="main" pos="relative">
-      <Box w="100%" h="100%" px="30px">
+    <Box as="section" pos="relative">
+      <Box w="100%" h="100%" px={[ "10px", "20px", "30px"]}>
         <Flex>
           <Box
             pos='relative'
@@ -29,7 +30,7 @@ export default function CTAFullWidth({ buttons, image, ctaTitle, buttonLabel, ct
               }}
             ></Box>
 
-            <Box width={{ lg: '860px' }} pos="absolute" top="50%" left="50%" transform="translate(-50%, -50%)">
+            <Box width={{ base: '100%', lg: '860px' }} px={{ base: '10px', lg: 0 }} pos="absolute" top="50%" left="50%" transform="translate(-50%, -50%)">
               <Heading
                 as="h2"
                 pos="relative"

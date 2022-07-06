@@ -1,16 +1,14 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Box, Grid, GridItem, Heading, Text } from "@chakra-ui/react"
 import FancyHeading from './FancyHeading'
+import { Box, Grid, GridItem, Heading } from '@chakra-ui/react'
 
 export default function ShowCollections({ showAllCollections, collections, collectionTitle }) {
-  if (!showAllCollections) {
-    return null
-  }
+  if (!showAllCollections) return null
   
   return (
     <>
-      <Box display="flex" mt={40}>
+      <Box display="flex" mt={[ 20, null, 28, null, 40]}>
         <FancyHeading fancyTitle={collectionTitle} />
       </Box>
       <Box as="section" my={10}>

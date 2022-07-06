@@ -1,11 +1,11 @@
-import { useState, useEffect, useContext } from "react"
+import { useState, useEffect, useContext } from 'react'
 import useSWR from 'swr'
-import { fetchInventory } from "@/lib/fetcher"
-import { formatter } from '../../utils/helpers'
-import ProductOptions from "./ProductOptions"
+import { fetchInventory } from '@/lib/fetcher'
+import { formatter } from '@/utils/helpers'
 import { CartContext } from '@/context/shopifyContext'
-import { Box, Button, Divider, Heading, Link, Stack, Text } from "@chakra-ui/react"
-import ProductColorOptions from "./ProductColorOptions"
+import ProductOptions from './ProductOptions'
+import ProductColorOptions from './ProductColorOptions'
+import { Box, Button, Divider, Heading, HStack, Input, Link, Stack, Text, useNumberInput } from '@chakra-ui/react'
 
 export default function FeaturedSingleForm({ product }) {
 
@@ -17,6 +17,28 @@ export default function FeaturedSingleForm({ product }) {
 
   const [available, setAvailable] = useState(true)
   const { addToCart } = useContext(CartContext)
+
+  // set quantityAvailable as max in counter
+  const [maxAmount, setMaxAmount] = useState(product.variants.edges[0].node.quantityAvailable)
+  // quantity state and counter
+  const [itemQuantity, setItemQuantity] = useState(1)
+  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
+  useNumberInput({
+    step: 1,
+    defaultValue: 1,
+    min: 1,
+    max: maxAmount,
+    precision: 0,
+  })
+
+  const inc = getIncrementButtonProps()
+  const dec = getDecrementButtonProps()
+  const input = getInputProps()
+
+  // set quantity in state, in order to update allVariantOptions quanity when changing the variant
+  useEffect(() => {
+    setItemQuantity(input.value)
+  }, [inc, dec, input.value])
 
   const allVariantOptions = product.variants.edges?.map(variant => {
     const allOptions = {}
@@ -33,10 +55,12 @@ export default function FeaturedSingleForm({ product }) {
       options: allOptions,
       variantTitle: variant.node.title,
       variantPrice: variant.node.priceV2.amount,
-      variantQuantity: 1
+      quantityAvailable: variant.node.quantityAvailable,
+      variantQuantity: itemQuantity
     }
   })
 
+  // set default values
   const defaultValues = {}
   product.options.map(item => {
     defaultValues[item.name] = item.values[0]
@@ -44,17 +68,25 @@ export default function FeaturedSingleForm({ product }) {
 
   const [selectedVariant, setSelectedVariant] = useState(allVariantOptions[0])
   const [selectedOptions, setSelectedOptions] = useState(defaultValues)
+  
+  // update max quantityAvailable for quantity counter
+  useEffect(() => {
+    setMaxAmount(selectedVariant.quantityAvailable)
+  }, [selectedOptions, selectedVariant.quantityAvailable])
 
   function setOptions(name, value) {
+    // map state to find selected options
     setSelectedOptions(prevState => {
       return { ...prevState, [name]: value }
     })
 
+    // settings selected options
     const selection = {
       ...selectedOptions,
       [name]: value
     }
 
+    //return selection to state, which is passed to addToCart
     allVariantOptions.map(item => {
       if (JSON.stringify(item.options) === JSON.stringify(selection)) {
         setSelectedVariant(item)
@@ -62,6 +94,20 @@ export default function FeaturedSingleForm({ product }) {
     })
   }
 
+  // add quantity to selection
+  const setQuantity = (value) => {
+    setSelectedVariant(selectedVariant => ({
+      ...selectedVariant,
+      variantQuantity: value
+    }))
+  }
+
+  useEffect(() => {
+    // setting quantity
+    setQuantity(parseInt(input.value))
+  }, [itemQuantity])
+
+  // check to make sure the product is available with the selections
   useEffect(() => {
     if (productInventory) {
       const checkAvailable = productInventory?.variants.edges.filter(item => item.node.id === selectedVariant.id)
@@ -82,7 +128,7 @@ export default function FeaturedSingleForm({ product }) {
         <Heading
           as="h2"
           pos="relative"
-          fontSize={['lg', 'xl', '2xl', '3xl']}
+          fontSize={['xl', 'xl', '2xl', '2xl', '3xl']}
           lineHeight="1"
           fontWeight="medium"
           color="gray.900"
@@ -113,9 +159,6 @@ export default function FeaturedSingleForm({ product }) {
                         values={values}
                         selectedOptions={selectedOptions}
                         setOptions={setOptions}
-                        selectedVariant={selectedVariant}
-                        productInventory={productInventory}
-                        available={available}
               />
             return <ProductOptions
                       key={`key-${name}`}
@@ -123,12 +166,42 @@ export default function FeaturedSingleForm({ product }) {
                       values={values}
                       selectedOptions={selectedOptions}
                       setOptions={setOptions}
-                      selectedVariant={selectedVariant}
-                      productInventory={productInventory}
-                      available={available}
                     />
           })
         }
+        <Text as="legend" fontSize="sm">Quantity:</Text>
+        <HStack spacing={1}>
+          <Button
+            height={8}
+            border="1px solid rgba(33, 33, 33, 0.2)"
+            borderRadius={0}
+            bg="white"
+            _hover={{
+              border: '1px solid #212121',
+              bg: "white"
+            }}
+            {...dec}
+          >-</Button>
+          <Input
+            type="number"
+            name="product-quantity"
+            height={8}
+            maxW="50px"
+            borderRadius={0}
+            {...input}
+          />
+          <Button
+            height={8}
+            border="1px solid rgba(33, 33, 33, 0.2)"
+            borderRadius={0}
+            bg="white"
+            _hover={{
+              border: '1px solid #212121',
+              bg: "white"
+            }}
+            {...inc}
+          >+</Button>
+        </HStack>
         {
           available ?
             <Button

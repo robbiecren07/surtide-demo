@@ -1,12 +1,10 @@
-import { Box, Flex } from "@chakra-ui/react"
-import Button from "../Button"
-import { ProductList } from "../products"
-import FancyHeading from "./FancyHeading"
+import Button from '../Button'
+import { ProductList } from '../products'
+import FancyHeading from './FancyHeading'
+import { Box, Flex } from '@chakra-ui/react'
 
 export default function ShowProductList({ showProducts, products, productListTitle, button, productsPage, collectionProducts }) {
-  if (!showProducts) {
-    return null
-  }
+  if (!showProducts) return null
 
   let theProducts
   if (products !== undefined) {
@@ -22,7 +20,7 @@ export default function ShowProductList({ showProducts, products, productListTit
   return (
     <>
       {products ? 
-        <Box mt={40}>
+        <Box mt={[ 20, null, null, 40]}>
           <Box display="flex">
             <FancyHeading fancyTitle={productListTitle} />
           </Box>
@@ -34,7 +32,7 @@ export default function ShowProductList({ showProducts, products, productListTit
           </Flex>
         </Box>
         :
-        <Box my={40}>
+        <Box my={{ lg: 40 }}>
           {productListTitle &&
             <Box display="flex" mb={20}>
               <FancyHeading fancyTitle={productListTitle} />

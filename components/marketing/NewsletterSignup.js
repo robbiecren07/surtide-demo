@@ -5,10 +5,13 @@ import {
   FormLabel,
   VisuallyHidden,
   Button,
-  Input
+  Input,
+  useToast
 } from '@chakra-ui/react'
 
 export default function NewsletterSignup({ ctaLabel, subtitle, title }) {
+  const toast = useToast()
+
   return (
     <Box bg="#222222">
       <Box maxW="7xl" mx="auto" py={{ base: 12, lg: 16 }} px={[4, 6, null, 8]}>
@@ -17,14 +20,12 @@ export default function NewsletterSignup({ ctaLabel, subtitle, title }) {
           fontSize={['3xl', '4xl']}
           lineHeight="shorter"
           fontWeight="extrabold"
-          display={['inline', 'block']}
           color="white"
         >
           {title}
         </Heading>
         <Text
           fontSize="lg"
-          display={['inline', 'block']}
           letterSpacing="tight"
           color="white"
         >
@@ -70,6 +71,15 @@ export default function NewsletterSignup({ ctaLabel, subtitle, title }) {
               _hover={{
                 bg: 'green.800'
               }}
+              onClick={() =>
+                toast({
+                  title: 'Warning!',
+                  description: "This is a just a demo newsletter signup!",
+                  status: 'warning',
+                  duration: 4000,
+                  isClosable: true,
+                })
+              }
             >
               {ctaLabel || 'Submit'}
             </Button>

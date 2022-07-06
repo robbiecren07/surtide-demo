@@ -1,5 +1,5 @@
-import { Box, Link as ChakraLink } from '@chakra-ui/react'
 import Link from 'next/link'
+import { Box, Link as ChakraLink } from '@chakra-ui/react'
 
 const linkDefaultStyles = {
   width: 'full',

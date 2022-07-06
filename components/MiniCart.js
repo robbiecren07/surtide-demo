@@ -1,8 +1,6 @@
-import { Fragment, useContext, useEffect, useRef } from 'react'
+import { useContext, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Dialog, Transition } from '@headlessui/react'
-import { XIcon } from '@heroicons/react/outline'
 import { CartContext } from '@/context/shopifyContext'
 import { formatter } from '@/utils/helpers'
 import {
@@ -12,7 +10,6 @@ import {
 
 
 export default function MiniCart({ cart }) {
-  const cancelButtonRef = useRef()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { cartOpen, setCartOpen, checkoutUrl, removeCartItem } = useContext(CartContext)
 
@@ -46,7 +43,8 @@ export default function MiniCart({ cart }) {
   }
 
   return (
-      <Drawer onClose={handleOnClose} isOpen={isOpen} size="sm">
+    <>
+    <Drawer onClose={handleOnClose} isOpen={isOpen} size="sm">
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
@@ -90,7 +88,7 @@ export default function MiniCart({ cart }) {
                                     <a onClick={() => setCartOpen(false)}>{product.title}</a>
                                   </Link>
                                 </Heading>
-                                <Text as="p" ml="10px" fontWeight="medium">{formatter.format(product.variantPrice)}</Text>
+                                <Text as="p" ml="10px" fontWeight="medium">{formatter.format(product.variantPrice * product.variantQuantity)}</Text>
                               </Box>
                               <Text mt="10px" fontSize="sm" color="gray.500">{product.variantTitle}</Text>
                             </Box>
@@ -113,8 +111,8 @@ export default function MiniCart({ cart }) {
                         </ListItem>
                       ))}
                     </List> :
-                    <Box>
-                      <Text>Your cart is empty!</Text>
+                    <Box mt={10}>
+                      <Text>Your cart is currently empty!</Text>
                     </Box>
                 }
               </Box>
@@ -153,5 +151,6 @@ export default function MiniCart({ cart }) {
           </DrawerBody>
         </DrawerContent>
       </Drawer>
+    </>
   )
 }

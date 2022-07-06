@@ -2,14 +2,14 @@ import { graphcmsClient } from '@/lib/client'
 import { pageQuery } from '@/lib/queries'
 import { parsePageData } from '@/utils/parsePageData'
 import ProductPageContent from "@/components/products/ProductPageContent"
-import { getAllProducts, getProduct, recursiveCatalog } from "@/lib/shopify"
+import { getProduct, recursiveCatalog } from "@/lib/shopify"
 import Layout from '@/components/Layout'
 
-export default function ProductPage({ page, product, navigation }) {
+export default function ProductPage({ data, product }) {
 
   return (
     <>
-      <Layout page={page} navigation={navigation}>
+      <Layout {...data}>
         <ProductPageContent product={product} />
       </Layout>
     </>
@@ -17,7 +17,8 @@ export default function ProductPage({ page, product, navigation }) {
 }
 
 export async function getStaticPaths() {
-  const allProducts = await getAllProducts()
+  //const allProducts = await getAllProducts()
+  const allProducts = await recursiveCatalog()
 
   const paths = allProducts.map(product => ({
     params: { products: String(product.node.handle) }
@@ -25,24 +26,24 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false
+    fallback: 'blocking'
   }
 }
 
 export async function getStaticProps({ params, preview = false }) {
-  const product = await getProduct(params.products)
   const client = graphcmsClient(preview)
 
-  const { page, navigation } = await client.request(pageQuery, {
+  const data = await client.request(pageQuery, {
     slug: 'products'
   })
 
-  const parsedPageData = await parsePageData(page)
+  const product = await getProduct(params.products)
+  const parsedPageData = await parsePageData(data.page)
 
   return {
     props: {
+      data,
       page: parsedPageData,
-      navigation,
       product,
       preview
     },

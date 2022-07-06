@@ -1,7 +1,7 @@
-import { Box, FormControl, FormLabel, VisuallyHidden, Text } from '@chakra-ui/react'
+import { Box, FormControl, FormLabel, Text } from '@chakra-ui/react'
 import ColorSwatches from './ColorSwatches'
 
-export default function ProductColorOptions({ name, values, selectedOptions, setOptions, productInventory, selectedVariant }) {
+export default function ProductColorOptions({ name, values, selectedOptions, setOptions }) {
 
   return (
     <FormControl mt="10px">
@@ -13,7 +13,7 @@ export default function ProductColorOptions({ name, values, selectedOptions, set
             const checked = selectedOptions[name] === value
 
             return (
-              <FormLabel key={id} htmlFor={id}>
+              <FormLabel key={id} htmlFor={id} m="0">
                 <input
                   type="radio"
                   id={id}

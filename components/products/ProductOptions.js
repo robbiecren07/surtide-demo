@@ -1,6 +1,6 @@
-import { Box, FormControl, FormLabel, VisuallyHidden, Text } from '@chakra-ui/react'
+import { Box, FormControl, FormLabel, Text } from '@chakra-ui/react'
 
-export default function ProductOptions({ name, values, selectedOptions, setOptions, productInventory, selectedVariant }) {
+export default function ProductOptions({ name, values, selectedOptions, setOptions }) {
 
   return (
     <FormControl mt="10px">

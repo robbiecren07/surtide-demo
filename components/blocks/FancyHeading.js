@@ -1,8 +1,9 @@
-import { Box, Heading, Text } from '@chakra-ui/react'
+import Button from '../Button'
 import Container from '../Container'
+import { Box, Heading, Text } from '@chakra-ui/react'
 
-export default function FancyHeading({ fancyTitle, fancyContent }) {
-
+export default function FancyHeading({ fancyTitle, fancyContent, buttons }) {
+  if (!fancyTitle) return null
   return (
     <>
       {fancyContent ?
@@ -26,6 +27,14 @@ export default function FancyHeading({ fancyTitle, fancyContent }) {
             <Box w={['100%', null , '80%', '70%']} mx="auto">
               <Text textAlign="center">{fancyContent}</Text>
             </Box>
+
+            {buttons &&
+              buttons.map((button) => (
+                <Box key={button.href} w="fit-content" mt={4} mx="auto">
+                  <Button href={button.href} label={button.label} theme={button.theme} />
+                </Box>
+              ))
+            }
           </Container>
         </>
       :
@@ -34,7 +43,7 @@ export default function FancyHeading({ fancyTitle, fancyContent }) {
             <Heading
               as="h2"
               pos="relative"
-              fontSize={['lg', 'xl', '2xl', '3xl']}
+              fontSize={['2xl', null, null, '3xl']}
               lineHeight="1"
               fontWeight="medium"
               color="gray.900"

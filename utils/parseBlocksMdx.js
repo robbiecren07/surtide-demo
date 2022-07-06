@@ -5,7 +5,7 @@ import { parseColumnsMdx } from '@/utils/parseColumnsMdx'
 
 const parseBlocksMdx = async (blocks) =>
   await Promise.all(
-    blocks.map(async ({ columns, content, simpleContent, gridSubtitle, ...block }) => ({
+    blocks.map(async ({ columns, content, gridSubtitle, storeAddress, storeHours, ...block }) => ({
       ...(gridSubtitle && {
         gridSubtitle: {
           markdown: gridSubtitle,
@@ -18,10 +18,16 @@ const parseBlocksMdx = async (blocks) =>
           mdx: await serialize(he.decode(content))
         }
       }),
-      ...(simpleContent && {
-        simpleContent: {
-          markdown: simpleContent,
-          mdx: await serialize(he.decode(simpleContent))
+      ...(storeAddress && {
+        storeAddress: {
+          markdown: storeAddress,
+          mdx: await serialize(he.decode(storeAddress))
+        }
+      }),
+      ...(storeHours && {
+        storeHours: {
+          markdown: storeHours,
+          mdx: await serialize(he.decode(storeHours))
         }
       }),
       ...block,

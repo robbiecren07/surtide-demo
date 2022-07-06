@@ -1,7 +1,7 @@
-import { Box, Flex, Link, Stack, Text } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import Image from 'next/image'
 import startCase from 'lodash.startcase'
+import { Box, Flex, Link, Stack, Text } from '@chakra-ui/react'
 
 export default function BlogPostCard({
   category,

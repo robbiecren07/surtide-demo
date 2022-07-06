@@ -1,12 +1,13 @@
-import { Box, Heading, Stack, Text } from '@chakra-ui/react'
 import Image from 'next/image'
-import { MDXRemote } from 'next-mdx-remote'
 import Button from '@/components/Button'
+import { Box, Heading, Stack, Text } from '@chakra-ui/react'
 
 export default function InternalHero({ buttons, image, page, heroContent }) {
+  if (!image) return null
+  
   return (
-    <Box position="relative" bg="gray.50">
-      <Box as="main" position={{ lg: 'relative' }}>
+    <Box as="section" pos="relative" bg="gray.50">
+      <Box pos="relative" display={{ base: 'flex', lg: 'block' }} flexDirection={{ base: 'column-reverse' }}>
         <Box
           mx="auto"
           maxW="7xl"
@@ -26,7 +27,7 @@ export default function InternalHero({ buttons, image, page, heroContent }) {
               color="gray.900"
               mb={4}
               _after={{
-                content: '""', position: 'absolute', bottom: '-1rem', left: '0', width: '40px', height: '3px', backgroundColor: 'green.700'
+                content: '""', position: 'absolute', bottom: '-1rem', left: { base: '50%', lg: 0 }, transform: { base: 'translateX(-50%)', lg: 'unset' }, width: '40px', height: '3px', backgroundColor: 'green.700'
               }}
             >
               {page.title}

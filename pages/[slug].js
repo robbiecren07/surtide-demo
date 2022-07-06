@@ -7,14 +7,14 @@ import Layout from '@/components/Layout'
 import BlockWrapper from '@/components/BlockWrapper'
 import * as Marketing from '@/marketing'
 
-export default function Page({ page, navigation, collectionCards }) {
+export default function Page({ data, page, collectionCards }) {
   const pageNewsletter = page?.marketing?.find(
     (block) => block.__typename === 'Newsletter'
   )
 
   return (
     <>
-      <Layout page={page} navigation={navigation}>
+      <Layout {...data}>
         <BlockWrapper {...page} collectionCards={collectionCards} />
 
         {pageNewsletter && <Marketing.NewsletterSignup {...pageNewsletter} />}
@@ -51,24 +51,24 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params, preview = false }) {
   const client = graphcmsClient(preview)
-  const collectionCards = await getAllCollections()
 
-  const { page, navigation } = await client.request(pageQuery, {
+  const data = await client.request(pageQuery, {
     slug: params.slug
   })
 
-  if (!page) {
+  if (!data.page) {
     return {
       notFound: true
     }
   }
 
-  const parsedPageData = await parsePageData(page)
+  const collectionCards = await getAllCollections()
+  const parsedPageData = await parsePageData(data.page)
 
   return {
     props: {
+      data,
       page: parsedPageData,
-      navigation,
       collectionCards,
       preview
     },

@@ -1,8 +1,9 @@
 import Image from 'next/image'
-import { Box, Heading, Stack, Text } from '@chakra-ui/react'
 import Button from '@/components/Button'
+import { Box, Heading, Stack, Text } from '@chakra-ui/react'
 
 export default function HeroFullWidth({ heroButton, image, heroTitle, heroSubTitle, buttonLabel }) {
+  if (!heroTitle) return null
 
   return (
     <Box pos="relative">
@@ -12,7 +13,7 @@ export default function HeroFullWidth({ heroButton, image, heroTitle, heroSubTit
             pos='relative'
             w="100%"
             h="0"
-            paddingBottom="calc((800 / 1903) * 100%)"
+            paddingBottom={{ base: "100%", md: "calc((800 / 1903) * 100%)" }}
           >
             <Image
               className="hero-image"
@@ -24,7 +25,7 @@ export default function HeroFullWidth({ heroButton, image, heroTitle, heroSubTit
               objectFit="cover"
             />
           </Box>
-          <Box width={{ lg: '450px' }} pos="absolute" top="50%" left={{ lg: '1.5rem' }} transform="translateY(-50%)">
+          <Box width={{ base: '90%', md: '450px' }} pos="absolute" top="50%" left="1.5rem" transform="translateY(-50%)">
             <Heading
               as="h2"
               pos="relative"

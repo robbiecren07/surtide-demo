@@ -1,16 +1,15 @@
-import Layout from '@/components/Layout'
 import { blogPageQuery } from '@/lib/queries'
 import { BlogPostCard } from '@/columns'
 import { graphcmsClient } from '@/lib/client'
-import { parsePageData } from '@/utils/parsePageData'
 import { parsePostData } from '@/utils/parsePostData'
+import Layout from '@/components/Layout'
 import { Box, Grid } from '@chakra-ui/react'
 import { FancyHeading } from '@/blocks'
 
-export default function BlogPage({ page, navigation, posts }) {
+export default function BlogPage({ data, posts }) {
   return (
     <>
-      <Layout page={page} navigation={navigation}>
+      <Layout {...data}>
         <Box mt={20}>
           <FancyHeading fancyTitle="SurTide Blog" />
         </Box>
@@ -37,18 +36,16 @@ export default function BlogPage({ page, navigation, posts }) {
 export async function getStaticProps({ preview = false }) {
   const client = graphcmsClient(preview)
 
-  const { page, posts, navigation } = await client.request(blogPageQuery)
+  const data = await client.request(blogPageQuery)
 
-  const parsedPageData = await parsePageData(page)
   const parsedPostData = await Promise.all(
-    posts.map((post) => parsePostData(post))
+    data.posts.map((post) => parsePostData(post))
   )
 
   return {
     props: {
-      page: parsedPageData,
+      data,
       posts: parsedPostData,
-      navigation,
       preview
     },
     revalidate: 60

@@ -1,11 +1,22 @@
+.nav-sub__container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: var(--chakra-shadows-base);
+  z-index: 98;
+  overflow: hidden;
+}
+.nav-sub__menu:hover li:first-child a {
+  border-color: var(--chakra-colors-gray-500);
+}
 .avatar {
   border-radius: 50%;
 }
-
 .cover-image {
   border-radius: 6px;
 }
-
 .blog-post-card-image {
   width: 100%;
   height: 192px;
@@ -67,10 +78,10 @@
 .collection-card:hover .collection-card__box {
   transform: scale(1.1);
 }
-.cart_icon {
+.cart_icon, .account_icon {
   width: 24px;
   height: 24px;
-  stroke-width: 1.5;
+  stroke-width: 1;
 }
 .swiper-button-prev, .swiper-button-next {
   color: var(--chakra-colors-green-700) !important;
@@ -90,11 +101,18 @@
   margin-bottom: 10px;
 }
 .popup-box {
-  width: 500px;
+  width: calc(100% - 20px);
   position: fixed;
-  bottom: 50px;
-  right: 50px;
+  bottom: 20px;
+  right: 10px;
   z-index: 999;
+}
+@media (min-width: 768px) {
+  .popup-box {
+    max-width: 500px;
+    bottom: 50px;
+    right: 50px;
+  }
 }
 .visually-hidden {
   border: 0 !important;
@@ -108,4 +126,16 @@
 }
 hr {
   opacity: 1 !important;
+}
+.add-spacing p {
+  margin-bottom: 5px;
+}
+.add-spacing p:last-child {
+  margin-bottom: 0;
+}
+.add-spacing a {
+  transition: color 0.3s ease-in-out;
+}
+.add-spacing a:hover {
+  color: var(--chakra-colors-green-500);
 }

@@ -1,4 +1,4 @@
-export { default as BlogPostCard } from './blog-post-card'
-export { default as FAQCard } from './faq-card'
-export { default as FeatureCheck } from './feature-check'
-export { default as FeatureIcon } from './feature-icon'
+export { default as BlogPostCard } from './BlogPostCard'
+export { default as FAQCard } from './FeatureCard'
+export { default as ImageBlock } from './ImageBlock'
+export { default as FAQAccordion } from './FAQAccordion'

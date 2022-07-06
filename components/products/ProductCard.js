@@ -6,23 +6,9 @@ import { Box, Heading, Text, Stack, Link as ChakraLink, Flex, Tag } from '@chakr
 import ColorSwatches from './ColorSwatches'
 
 export default function ProductCard({ product }) {
-  const { handle, title } = product.node
-  const { altText, url } = product.node.images.edges[0].node
-  const price = product.node.priceRange.minVariantPrice.amount
-  const getPrice = product.node.compareAtPriceRange.maxVariantPrice.amount
-
-  let maxPrice
-  if (getPrice !== '0.0') {
-    maxPrice = getPrice
-  } else {
-    maxPrice = null
-  }
-  
-  const colors = product.node.options[1]
-
+  // get height of card before hover
   const cardRef = useRef()
   const [height, setHeight] = useState()
-  const [isHovered, setIsHovered] = useState(false)
 
   useEffect(() => {
     const getCardHeight = () => {
@@ -36,6 +22,20 @@ export default function ProductCard({ product }) {
     return () => window.removeEventListener("resize", getCardHeight)
   }, [])
 
+  const { handle, title } = product.node
+  const { altText, url } = product.node.images.edges[0].node
+  const price = product.node.priceRange.minVariantPrice.amount
+  const colors = product.node.options[1] // colors is 2nd in the array
+  const getPrice = product.node.compareAtPriceRange.maxVariantPrice.amount
+
+  // remove all compare prices that are $0.0 aka empty
+  let maxPrice
+  if (getPrice !== '0.0') {
+    maxPrice = getPrice
+  } else {
+    maxPrice = null
+  }
+  
   const linkDefaultStyles = {
     width: 'full',
     display: 'flex',
@@ -49,10 +49,7 @@ export default function ProductCard({ product }) {
   }
 
   return (
-    <Stack spacing={1} pos="relative" className="product-card"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <Stack spacing={1} pos="relative" className="product-card">
       <Box ref={cardRef} pos="relative" className="product-card__top">
         {maxPrice &&
           <Box pos="absolute" top="10px" right="-5px" zIndex="1" className="product-card_badge">

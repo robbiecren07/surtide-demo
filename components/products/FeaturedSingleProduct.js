@@ -26,11 +26,11 @@ export default function FeaturedSingleProduct({ product }) {
    })
 
   return (
-    <Box bg='white' py={10}>
-      <Box pos="relative" maxW="7xl" mx="auto" px={[4, 6, null, 8]}>
-        <Flex align="center" gap={10}>
+    <Box bg='white' py={[ null, null, 10 ]}>
+      <Box pos="relative" maxW="7xl" mx="auto">
+        <Flex flexDirection={[ 'column', null, null, 'row']} align="center" gap={10}>
           <Box
-            w={{ sm: '100%', lg: '50%' }}
+            w={{ base: '100%', lg: '50%' }}
             overflow="hidden"
           >
             <Box

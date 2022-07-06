@@ -1,14 +1,14 @@
-import { Box, Flex } from '@chakra-ui/react'
 import Image from 'next/image'
 import { MDXRemote } from 'next-mdx-remote'
 import { SlashIcon } from '@/icons'
+import { Box, Flex } from '@chakra-ui/react'
 import { StarIcon } from '@chakra-ui/icons'
 
 export default function Testimonial({ content, name, role, photo }) {
   if (!content) return null
 
   return (
-    <Box as="section" my={10} py={[12, null, 20, 24]} bg="gray.100" overflow="hidden">
+    <Box as="section" my={[ 20, 20, 32, null, 40 ]} py={[12, null, 20, 24]} bg="gray.100" overflow="hidden">
       <Box pos="relative" maxW="7xl" mx="auto" px={[4, 6, null, 8]}>
         <Box pos="relative">
           <Flex pos="relative" justifyContent="center">

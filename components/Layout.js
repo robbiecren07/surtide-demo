@@ -18,7 +18,7 @@ function PreviewBanner({ enabled = false }) {
   )
 }
 
-export default function Layout({ children, page, navigation, preview = false }) {
+export default function Layout({ children, page, navigations, preview = false, ...data }) {
   const pageBanner = page?.marketing?.find(
     (block) => block.__typename === 'Banner'
   )
@@ -32,13 +32,13 @@ export default function Layout({ children, page, navigation, preview = false }) 
         <PreviewBanner enabled={preview} />
 
         {pageBanner && <Marketing.Banner {...pageBanner} />}
-        {navigation && <Navigation {...navigation} />}
+        <Navigation navigations={navigations} />
 
         <Box as="main" flexGrow="1">
           {children}
         </Box>
 
-        {page?.footer && <Footer {...page.footer} />}
+        <Footer {...data.footer} />
       </Flex>
     </>
   )

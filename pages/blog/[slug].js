@@ -1,27 +1,19 @@
+import { gql } from 'graphql-request'
 import NextLink from 'next/link'
 import Image from 'next/image'
-import { gql } from 'graphql-request'
 import SEO from '@/components/SEO'
 import Layout from '@/components/Layout'
 import { MDXRemote } from 'next-mdx-remote'
 import { blogPostQuery } from '@/lib/queries'
 import { graphcmsClient } from '@/lib/client'
 import { parsePostData } from '@/utils/parsePostData'
-import {
-  Box,
-  Heading,
-  List,
-  VisuallyHidden,
-  Link,
-  Stack,
-  HStack
-} from '@chakra-ui/react'
+import { Box, Heading, VisuallyHidden, Link, Stack } from '@chakra-ui/react'
 
-export default function BlogPost({ page, navigation, nextPost, post, previousPost }) {
+export default function BlogPost({ data, nextPost, post, previousPost }) {
   return (
     <>
       <SEO {...post.seo} />
-      <Layout page={page} navigation={navigation} post={post}>
+      <Layout {...data}>
         <Box
           as="article"
           pos="relative"
@@ -179,41 +171,7 @@ export default function BlogPost({ page, navigation, nextPost, post, previousPos
   )
 }
 
-export async function getStaticProps({ params, preview = false }) {
-  const client = graphcmsClient(preview)
-
-  const { allPosts, page, post, navigation } = await client.request(blogPostQuery, {
-    slug: params.slug
-  })
-
-  if (!post) {
-    return {
-      notFound: true
-    }
-  }
-
-  const postIndex = allPosts.findIndex(({ id }) => id === post.id)
-
-  const nextPost = allPosts[postIndex + 1] || null
-  const previousPost = allPosts[postIndex - 1] || null
-
-  const parsedPostData = await parsePostData(post)
-
-  return {
-    props: {
-      nextPost,
-      page,
-      navigation,
-      post: parsedPostData,
-      previousPost,
-      preview
-    },
-    revalidate: 60
-  }
-}
-
 export async function getStaticPaths() {
-
   const client = graphcmsClient()
 
   const { posts } = await client.request(gql`
@@ -235,6 +193,37 @@ export async function getStaticPaths() {
           },
         }
       }) || [],
-    fallback: false,
+    fallback: 'blocking',
+  }
+}
+
+export async function getStaticProps({ params, preview = false }) {
+  const client = graphcmsClient(preview)
+
+  const data = await client.request(blogPostQuery, {
+    slug: params.slug
+  })
+
+  if (!data.post) {
+    return {
+      notFound: true
+    }
+  }
+
+  const postIndex = data.allPosts.findIndex(({ id }) => id === data.post.id)
+  const nextPost = data.allPosts[postIndex + 1] || null
+  const previousPost = data.allPosts[postIndex - 1] || null
+
+  const parsedPostData = await parsePostData(data.post)
+
+  return {
+    props: {
+      data,
+      nextPost,
+      post: parsedPostData,
+      previousPost,
+      preview
+    },
+    revalidate: 60
   }
 }

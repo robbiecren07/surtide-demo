@@ -1,18 +1,10 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
-import Button from '@/components/Button'
 
-const themeColor = {
-  WARNING: 'orange.600'
-}
-
-export default function Banner({ content, href, theme = 'WARNING' }) {
+export default function Banner({ content, href }) {
   if (!content || !href) return null
 
   return (
-    <Box
-      bg={themeColor[theme] || '#222222'}
-      color={themeColor[theme] || '#222222'}
-    >
+    <Box bg='#222222' color='#fffcc6'>
       <Box maxW={1280} mx="auto" py={3} px={[3, 6, null, 8]}>
         <Flex alignItems="center" justifyContent="center">
           <Text fontSize="sm" fontWeight="normal" color="#fffcc6">
