@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <a href="https://surtide.robbiecrenshaw.dev">
+  <a href="https://surtide.robbiecrenshaw.dev" target="_blank">
     <img src="https://img.shields.io/static/v1?label=&message=View%20Demo&style=for-the-badge&color=black&logo=vercel" />
   </a>
 </p>
