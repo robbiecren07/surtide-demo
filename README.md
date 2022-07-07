@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <a href="https://hull.dev">
+  <a href="https://surtide.robbiecrenshaw.dev">
     <img src="https://img.shields.io/static/v1?label=&message=View%20Demo&style=for-the-badge&color=black&logo=vercel" />
   </a>
 </p>
@@ -20,7 +20,6 @@
 - Animations powered by [Framer Motion](https://www.framer.com/motion/)
 - Real-time inventory check for products using [SWR](https://swr.vercel.app)
 - Image touch slider with [Swiper](https://swiperjs.com/)
-- Customizable Filtering & Sorting for product collections
 - Dynamic Page Routes for custom page creation
 - Automatic `Sitemap.xml` generation
 - Automatic `robots.txt` generation
@@ -28,6 +27,3 @@
 - SEO features:
   - Page-level SEO/Share settings with previews
   - Fallback Global SEO/Share settings
-  - Automatic JSON-LD Schema markup for products
-
-<br />
