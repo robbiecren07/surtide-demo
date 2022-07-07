@@ -51,7 +51,7 @@ export default function MyApp({ Component, pageProps }) {
       <ShopProvider>
         <DefaultSeo {...defaultSEO} />
           <ProgressBar isAnimating={isAnimating} />
-          <Component {...pageProps} />
+          <Component {...pageProps} key={router.asPath} />
       </ShopProvider>
     </ChakraProvider>
   )

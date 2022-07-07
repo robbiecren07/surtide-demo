@@ -126,7 +126,7 @@ export default function ProductPageForm({ product }) {
         setAvailable(false)
       }
     }
-  }, [productInventory, selectedVariant])
+  }, [productInventory, selectedVariant, mounted])
   
   return (
     <Box pos="relative" w={{ sm: '100%', lg: '50%', xl: '40%' }} px={{ lg: "40px"}}>
