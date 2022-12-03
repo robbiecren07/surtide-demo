@@ -101,7 +101,7 @@ export default function Footer({ primaryLinks, secondaryLinks, aboutText }) {
               <SocialMediaLink
                 title="GitHub"
                 icon={GithubIcon}
-                href="https://github.com/GraphCMS/reference-nextjs-marketing"
+                href="https://github.com/robbiecren07"
               />
             </Box>
           </Box>
@@ -149,7 +149,7 @@ export default function Footer({ primaryLinks, secondaryLinks, aboutText }) {
             <SocialMediaLink
               title="GitHub"
               icon={GithubIcon}
-              href="https://github.com/GraphCMS/reference-nextjs-marketing"
+              href="https://github.com/robbiecren07"
             />
           </Flex>
 

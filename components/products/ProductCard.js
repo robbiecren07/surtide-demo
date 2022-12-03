@@ -106,12 +106,12 @@ export default function ProductCard({ product }) {
       <Box
         display="none"
         pos="absolute"
-        w="calc(100% + 60px)"
+        w={{ base: 'calc(100% + 20px)', md: 'calc(100% + 60px)' }}
         height="fit-content"
         p="30px"
         pt={height}
         bg="white"
-        inset="-30px -30px 0 -30px"
+        inset={{base: "-10px -10px 0 -10px", md: "-30px -30px 0 -30px"}}
         boxShadow="0 3px 18px 0 rgba(42, 42, 42, 0.22)"
         zIndex="10"
         className="quick-shop"

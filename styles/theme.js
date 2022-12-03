@@ -115,7 +115,9 @@ export const theme = extendTheme({
   styles: {
     global: {
       'html, body': {
+        height: '100%',
         color: 'gray.500',
+        overflowX: 'hidden'
       },
       'ul, ol': {
         listStyle: 'none'
