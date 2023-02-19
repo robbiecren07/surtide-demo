@@ -6,7 +6,7 @@ import { DefaultSeo } from 'next-seo'
 import { defaultSEO } from '../next-seo.config'
 import { theme } from '../styles/theme'
 import ProgressBar from '@/components/ProgressBar'
-
+import Script from 'next/script'
 import '../styles/css/global.css'
 
 export default function MyApp({ Component, pageProps }) {
@@ -49,9 +49,25 @@ export default function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
       <ShopProvider>
+
+        {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){window.dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
+          `}
+        </Script>
+
         <DefaultSeo {...defaultSEO} />
-          <ProgressBar isAnimating={isAnimating} />
-          <Component {...pageProps} key={router.asPath} />
+        <ProgressBar isAnimating={isAnimating} />
+        <Component {...pageProps} key={router.asPath} />
       </ShopProvider>
     </ChakraProvider>
   )
